@@ -1,0 +1,37 @@
+# deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myApp
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: myApp
+  template:
+    metadata:
+      labels:
+        app: myApp
+    spec:
+      containers:
+        - name: frontend
+          image: ap-mumbai-1.ocir.io/bmmvr5kyajhc/myapp/myapp:1.0
+          ports:
+            - containerPort: 3000
+      imagePullSecrets:
+        - name: regcred
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: myApp-lb
+spec:
+  selector:
+    app: myApp
+  type: LoadBalancer
+  ports:
+    - name: frontend
+      port: 80
+      targetPort: 3000
+      protocol: TCP
