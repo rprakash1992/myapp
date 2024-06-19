@@ -7,7 +7,7 @@ spec:
     app: myApp
   type: LoadBalancer
   ports:
-    - name: frontend
-      port: 80
-      targetPort: 3000
-      protocol: TCP
+  - name: frontend
+    port: 80
+    targetPort: 3000
+    protocol: TCP
